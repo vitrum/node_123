@@ -107,7 +107,8 @@
     #console_wrapper {background-color: black; color:white;padding:5px;}  
     #console p {padding:0;margin:0;} 
     
-    #btnInit { background: -moz-linear-gradient(center bottom , #959595, #EFEFEF) repeat scroll 0 0 transparent;
+    #btnInit { 
+    background: #959595 -moz-linear-gradient(center bottom , #959595, #EFEFEF) repeat scroll 0 0 transparent;
     border-radius: 4px 4px 4px 4px;
     line-height: 15px;
     height: 50px;
@@ -120,7 +121,7 @@
 
 <body>
   <div>  
-      <button id="btnInit" >Find my location</button>  
+      <a id="btnInit" >Find my location</a>  
     </div> 
 <div id="info"></div>
 <h1>Web Socket Chat</h1>   
@@ -190,7 +191,7 @@
         });  
   
         function initiate_geolocation() {  
-            navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback,{maximumAge:Infinity, timeout:0});  
+            navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback,{maximumAge:60000});  
         }  
         function errorCallback(error) {
           // Update a div element with error.message.
