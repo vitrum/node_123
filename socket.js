@@ -1,5 +1,5 @@
 var sys = require("sys"),
-    ws = require("../lib/ws/ws");
+    ws = require("./ws");
 
 var socketPool = [];
 
