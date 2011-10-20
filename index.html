@@ -175,6 +175,7 @@
 
 <script>
   /*geolocation  */
+  var touchTime = 1 ;
         jQuery(window).ready(function(){  
             jQuery("#btnInit").click(initiate_geolocation);  
         });  
@@ -185,11 +186,12 @@
   
         function handle_geolocation_query(position){  
  
-            var text = "Latitude: "  + position.coords.latitude  + "<br/>" +  
+            var text =  "touchTime:" + touchTime + "<br/>Latitude: "  + position.coords.latitude  + "<br/>" +  
                "Longitude: " + position.coords.longitude + "<br/>" +  
                "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
                "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;  
-            jQuery("#info").append(text); 
+            jQuery("#info").prepend(text); 
+            touchTime = touchTime + 1 ;
                   
                   
         }  
