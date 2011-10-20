@@ -181,7 +181,9 @@
         });  
   
         function initiate_geolocation() {  
-            navigator.geolocation.getCurrentPosition(handle_geolocation_query);  
+            navigator.geolocation.getCurrentPosition(handle_geolocation_query,,
+                                             errorCallback,
+                                             {maximumAge:500, timeout:0);  
         }  
   
         function handle_geolocation_query(position){  
