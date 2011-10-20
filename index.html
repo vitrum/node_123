@@ -185,8 +185,9 @@
         }  
         function errorCallback(error) {
           // Update a div element with error.message.
-          var text = "error";
+          var text = "touchTime:" + touchTime + "<br/>error.message: "  + error.message + "<br/>" ;;
           jQuery("#info").prepend(text); 
+          touchTime = touchTime + 1 ;
         }
         function handle_geolocation_query(position){  
  
