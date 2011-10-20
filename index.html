@@ -110,6 +110,7 @@
 </head>
 
 <body>
+<div id="info"></div>
 <h1>Web Socket Chat</h1>   
    
 <div id="server_wrapper">   
@@ -174,6 +175,15 @@
 var hasGeolocation = !!(navigator.geolocation);
 if(hasGeolocation){
   alert(“浏览器支持hasGeolocation”);
+}else{
+  var text = "Latitude: "  + position.coords.latitude  + "<br/>" +  
+               "Longitude: " + position.coords.longitude + "<br/>" +  
+               "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
+               "Time: " + new Date(position.timestamp);  
+    jQuery("#info").html(text);  
+  
+  
+  
 }
     
 
