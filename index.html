@@ -183,7 +183,11 @@
         function initiate_geolocation() {  
             navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback,{maximumAge:500, timeout:0});  
         }  
-  
+        function errorCallback(error) {
+          // Update a div element with error.message.
+          var text = "error";
+          jQuery("#info").prepend(text); 
+        }
         function handle_geolocation_query(position){  
  
             var text =  "touchTime:" + touchTime + "<br/>Latitude: "  + position.coords.latitude  + "<br/>" +  
