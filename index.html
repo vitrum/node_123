@@ -192,7 +192,7 @@
         });  
   
         function initiate_geolocation() {  
-            navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback,{maximumAge:6000});  
+            navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback);  
         }  
         function errorCallback(error) {
           // Update a div element with error.message.
