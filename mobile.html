@@ -6,8 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 
   <title>vitrum/node_123 @ GitHub</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>  
-  
+
   <style type="text/css">
     body {
       margin-top: 1.0em;
@@ -55,7 +54,7 @@
     <button id="btnLoad" class="btn btn_small" >Load</button>
     <button id="btnInit" class="btn" >Find my location</button>
   </div> 
-
+  <div id="container"></div>
 
 <script>
   /*geolocation  */
@@ -99,6 +98,11 @@
             jQuery(document.body).append(  
               jQuery(document.createElement("img")).attr("src", image_url).attr('id','map')  
             );  
+            
+             var map = new BMap.Map("container");
+             var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
+             map.centerAndZoom(point,16)
+             
         }  
         
         function clearn_log() {  
@@ -125,5 +129,7 @@
 
 
 </script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>  
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
 </body>
 </html>
