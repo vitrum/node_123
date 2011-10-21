@@ -18,14 +18,9 @@
       min-width:320px; max-width:480px;
       font-size:12px;
     }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-
-    
+  
     .btn { 
-      display:inline-block;
+      float:left;
       background:-webkit-gradient(linear,left top,left bottom,from(#959595),to(#efefef));
       background:-moz-linear-gradient(center bottom,#959595,#efefef);
       border-radius: 10px 10px 10px 10px;
@@ -34,11 +29,14 @@
       margin: 4px 0 0 4px;
       padding: 6px;
       text-align: center;
-      width: 100px;
+      width: 90%;
     }
     .btn_red {
       background:-webkit-gradient(linear,left top,left bottom,from(#ff9595),to(#ffefef));
       background:-moz-linear-gradient(center bottom,#ff9595,#ffefef);
+    }
+    .btn_small {
+      width:100px;
     }
     .log {
       width:90%;
@@ -53,9 +51,9 @@
   <div id="info" class="log"></div>
   <div>
     <button id="btnInit" class="btn" >Find my location</button>
-    <button id="btnClen" class="btn btn_red" >Clearn log</button>
-    <button id="btnSave" class="btn" >Find my location</button>
-    <button id="btnLoad" class="btn" >Find my location</button>
+    <button id="btnClen" class="btn btn_red btn_small" >Clearn</button>
+    <button id="btnSave" class="btn btn_small" >Save</button>
+    <button id="btnLoad" class="btn btn_small" >Load</button>
   </div> 
 
 
