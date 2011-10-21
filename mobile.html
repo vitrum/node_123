@@ -134,9 +134,9 @@
             /*var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
                     position.coords.longitude + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
                     position.coords.latitude + ',' + position.coords.longitude;*/
-			var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + newgps_x + "," +  
-                    newgps_y + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
-                    newgps_x + ',' + newgps_y;
+			var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + newgps_y + "," +  
+                    newgps_x + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
+                    newgps_y + ',' + newgps_x;
   
             jQuery("#map").remove();  
             jQuery(document.body).append(  
@@ -151,8 +151,8 @@
 			bm.setCenter(point);
 			document.getElementById("baiduXY").innerHTML = point.lng + "," + point.lat;
 
-			newgps_y = point.lng;
-			newgps_x = point.lat;
+			newgps_x = point.lng;
+			newgps_y = point.lat;
 			//alert(point.lng + ',' + point.lat);
 		}
 
