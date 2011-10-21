@@ -87,6 +87,12 @@
   var touchTime = 1 ;
   var geolocationJson = '';
   var bm = new BMap.Map("container");
+  
+  function getgps(name){
+             this.name = name;
+             this.x = 121.48479060028;
+             this.y = 31.234309729773;
+  }
 
   		translateOptions = function (point){
 			bm.clearOverlays();
@@ -128,15 +134,7 @@
             jQuery("#info").prepend(text); 
             touchTime = touchTime + 1 ;
 
-			/*google map image*/
-            var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
-                    position.coords.longitude + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
-                    position.coords.latitude + ',' + position.coords.longitude;  
-  
-            jQuery("#map").remove();  
-            jQuery(document.body).append(  
-              jQuery(document.createElement("img")).attr("src", image_url).attr('id','map')  
-            );  
+
             
 
 			/* baidu map */
@@ -156,6 +154,17 @@
 			bm.addControl(new BMap.NavigationControl());
 			
 			BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
+
+
+			/*google map image*/
+            var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + getgps.y + "," +  
+                    getgps.x + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
+                    position.coords.latitude + ',' + position.coords.longitude;  
+  
+            jQuery("#map").remove();  
+            jQuery(document.body).append(  
+              jQuery(document.createElement("img")).attr("src", image_url).attr('id','map')  
+            );  
 
 
              
@@ -268,6 +277,8 @@ function translate(point,type,callback){
     BMap.Convertor[callbackName] = function(xyResult){
         delete BMap.Convertor[callbackName];    //调用完需要删除改函数
         var point = new BMap.Point(xyResult.x, xyResult.y);
+        getgps.x = xyResult.x;
+        getgps.y = xyResult.y;
         callback && callback(point);
     }
 }
