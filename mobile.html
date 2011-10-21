@@ -25,16 +25,20 @@
 
     
     .btn { 
-      display:block;
+      display:inline-block;
       background:-webkit-gradient(linear,left top,left bottom,from(#959595),to(#efefef));
       background:-moz-linear-gradient(center bottom,#959595,#efefef);
       border-radius: 10px 10px 10px 10px;
       line-height: 15px;
-      height: 50px;
+      height: 40px;
       margin: 4px 0 0 4px;
-      padding: 10px;
+      padding: 6px;
       text-align: center;
-      width: 80%;
+      width: 100px;
+    }
+    .btn_red {
+      background:-webkit-gradient(linear,left top,left bottom,from(#ff9595),to(#ffefef));
+      background:-moz-linear-gradient(center bottom,#ff9595,#ffefef);
     }
     .log {
       width:90%;
@@ -49,7 +53,7 @@
   <div id="info" class="log"></div>
   <div>
     <button id="btnInit" class="btn" >Find my location</button>
-    <button id="btnClen" class="btn" >clearn log</button>
+    <button id="btnClen" class="btn btn_red" >Clearn log</button>
     <button id="btnSave" class="btn" >Find my location</button>
     <button id="btnLoad" class="btn" >Find my location</button>
   </div> 
@@ -58,32 +62,38 @@
 <script>
   /*geolocation  */
   var touchTime = 1 ;
+  var geolocationJson = '';
+  
         jQuery(window).ready(function(){  
             jQuery("#btnInit").click(initiate_geolocation); 
+            
+            jQuery("#btnClen").click(clearn_log); 
              
         });  
   
         function initiate_geolocation() {  
             navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback);  
-            
-            touchTime = touchTime + 1 ;
-            
         }  
+        
         function errorCallback(error) {
           // Update a div element with error.message.
           var text = "touchTime:" + touchTime + "<br/>error.message: "  + error.message + "<br/>" ;;
           jQuery("#info").prepend(text); 
           
         }
+        
         function handle_geolocation_query(position){  
- 
-            var text =  "touchTime:" + touchTime + "<br/>Latitude: "  + position.coords.latitude  + "<br/>" +  
+             var text =  "touchTime:" + touchTime + "<br/>Latitude: "  + position.coords.latitude  + "<br/>" +  
                "Longitude: " + position.coords.longitude + "<br/>" +  
                "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
                "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;  
             jQuery("#info").prepend(text); 
-                  
-                  
+            touchTime = touchTime + 1 ;
+        }  
+        
+        function clearn_log() {  
+            jQuery("#info").html();
+            
         }  
  
 
