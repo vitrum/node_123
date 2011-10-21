@@ -1,3 +1,5 @@
+<html>
+<head>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,16 +70,31 @@
     <button id="btnSave" class="btn btn_small" >Save</button>
     <button id="btnLoad" class="btn btn_small" >Load</button>
     <button id="btnInit" class="btn" >Find my location</button>
+  
   </div> 
+  <!--
+  <input value='GPS->baidu' type='button' onclick='alert("GPS->baidu");BMap.Convertor.translate(new BMap.Point(116.397428,39.90923),0,translateOptions);' />
+  -->
   <h3 class="title">Baidu Map</h3>
+  <p class="title">百度 gps:<span id='baiduXY'> </span></p>
   <div id="container" class="baidumap"></div>
   <h3 class="title">GOOGLE Map</h3>
   <div id="map_canvas"></div>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2&services=true"></script>
+<script type="text/javascript" src="http://dev.baidu.com/wiki/static/map/API/examples/script/convertor.js"></script>
 <script>
   /*geolocation  */
   var touchTime = 1 ;
   var geolocationJson = '';
+  var bm = new BMap.Map("container");
+
+  		translateOptions = function (point){
+			bm.clearOverlays();
+			var marker = new BMap.Marker(point);
+			bm.addOverlay(marker);
+			bm.setCenter(point);
+			document.getElementById("baiduXY").innerHTML = point.lng + "," + point.lat;
+		}
   
         jQuery(window).ready(function(){  
             jQuery("#btnInit").click(initiate_geolocation); 
@@ -110,6 +127,8 @@
                "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;  
             jQuery("#info").prepend(text); 
             touchTime = touchTime + 1 ;
+
+			/*google map image*/
             var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
                     position.coords.longitude + "&zoom=17&size=300x400&markers=color:blue|label:S|" +  
                     position.coords.latitude + ',' + position.coords.longitude;  
@@ -119,14 +138,31 @@
               jQuery(document.createElement("img")).attr("src", image_url).attr('id','map')  
             );  
             
-            var map = new BMap.Map("container");
+
+			/* baidu map */
+            /*
+			var map = new BMap.Map("container");
             var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
             map.addControl(new BMap.NavigationControl())
             map.centerAndZoom(point,17);
+			*/
+			//BMap.Convertor.translate(new BMap.Point(116.397428,39.90923),0,translateOptions);
+
+			
+			var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
+
+
+			bm.centerAndZoom(point, 17);
+			bm.addControl(new BMap.NavigationControl());
+			
+			BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
+
 
              
         }  
-        
+
+
+
         function clearn_log() {  
             var text = "";
             jQuery("#info").html(text);
@@ -205,3 +241,11 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
