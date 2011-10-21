@@ -11,51 +11,49 @@
   <style type="text/css">
     body {
       margin-top: 1.0em;
-      background-color: #6025f0;
+      background-color: #222;
       font-family: Helvetica, Arial, FreeSans, san-serif;
       color: #ffffff;
       width:100%;
       min-width:320px; max-width:480px;
+      font-size:12px;
     }
     #container {
       margin: 0 auto;
       width: 700px;
     }
-    h1 { font-size: 3.8em; color: #9fda0f; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #9fda0f; }
-    h3 { text-align: center; color: #9fda0f; }
-    a { color: #9fda0f; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-        .error {color: red;}  
-    .success {color: green;}  
-    #console_wrapper {background-color: black; color:white;padding:5px;}  
-    #console p {padding:0;margin:0;} 
+
     
-    #btnInit { 
-    display:block;
-    background:-webkit-gradient(linear,left top,left bottom,from(#959595),to(#efefef));
-    background:-moz-linear-gradient(center bottom,#959595,#efefef);
-    border-radius: 4px 4px 4px 4px;
-    line-height: 15px;
-    height: 50px;
-    margin: 4px 0 0 4px;
-    padding: 10px;
-    text-align: center;
-    width: 200px;}
+    .btn { 
+      display:block;
+      background:-webkit-gradient(linear,left top,left bottom,from(#959595),to(#efefef));
+      background:-moz-linear-gradient(center bottom,#959595,#efefef);
+      border-radius: 10px 10px 10px 10px;
+      line-height: 15px;
+      height: 50px;
+      margin: 4px 0 0 4px;
+      padding: 10px;
+      text-align: center;
+      width: 80%;
+    }
+    .log {
+      width:90%;
+      height:200px;
+      overflow: auto;
+      font-size:10px;
+    }
   </style>
 </head>
 
 <body>
-  <div>  
-      <button id="btnInit" >Find my location</button>  
-    </div> 
-<div id="info"></div>
+  <div id="info" class="log"></div>
+  <div>
+    <button id="btnInit" class="btn" >Find my location</button>
+    <button id="btnClen" class="btn" >clearn log</button>
+    <button id="btnSave" class="btn" >Find my location</button>
+    <button id="btnLoad" class="btn" >Find my location</button>
+  </div> 
+
 
 <script>
   /*geolocation  */
