@@ -59,7 +59,9 @@
     <button id="btnLoad" class="btn btn_small" >Load</button>
     <button id="btnInit" class="btn" >Find my location</button>
   </div> 
+  <h3>Baidu Map</h3>
   <div id="container" class="baidumap"></div>
+  <h3>GOOGLE Map</h3>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
 <script>
   /*geolocation  */
@@ -75,9 +77,7 @@
             
             jQuery("#btnLoad").click(load_log); 
             
-            var map = new BMap.Map("container");
-            var point = new BMap.Point(116.404, 39.915);
-            map.centerAndZoom(point,15);
+
              
         });  
   
@@ -107,7 +107,9 @@
             jQuery(document.body).append(  
               jQuery(document.createElement("img")).attr("src", image_url).attr('id','map')  
             );  
-            
+                        var map = new BMap.Map("container");
+            var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
+            map.centerAndZoom(point,15);
 
              
         }  
