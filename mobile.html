@@ -104,7 +104,7 @@
             jQuery("#info").prepend(text); 
             touchTime = touchTime + 1 ;
             var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
-                    position.coords.longitude + "&zoom=16&size=300x400&markers=color:blue|label:S|" +  
+                    position.coords.longitude + "&zoom=17&size=300x400&markers=color:blue|label:S|" +  
                     position.coords.latitude + ',' + position.coords.longitude;  
   
             jQuery("#map").remove();  
@@ -115,7 +115,7 @@
             var map = new BMap.Map("container");
             var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
             map.addControl(new BMap.NavigationControl())
-            map.centerAndZoom(point,18);
+            map.centerAndZoom(point,17);
 
              
         }  
