@@ -131,16 +131,21 @@
 			BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
 
 			/*google map image*/
-            /*var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
+            		var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
                     position.coords.longitude + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
-                    position.coords.latitude + ',' + position.coords.longitude;*/
-			var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + newgps_y + "," +  
+                    position.coords.latitude + ',' + position.coords.longitude;
+			
+			
+			var image_url2 = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + newgps_y + "," +  
                     newgps_x + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
                     newgps_y + ',' + newgps_x;
+                    
   
-            jQuery("#map").remove();  
+            jQuery("#map").remove(); 
+            jQuery("#map2").remove(); 
             jQuery(document.body).append(  
-              jQuery(document.createElement("img")).attr("src", image_url).attr('id','map')  
+              jQuery(document.createElement("img")).attr("src", image_url).attr('id','map');
+              jQuery(document.createElement("img")).attr("src", image_url2).attr('id','map2')  
             );  
         }  
 
