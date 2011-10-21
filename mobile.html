@@ -144,9 +144,12 @@
             jQuery("#map").remove(); 
             jQuery("#map2").remove(); 
             jQuery(document.body).append(  
-              jQuery(document.createElement("img")).attr("src", image_url).attr('id','map');
-              jQuery(document.createElement("img")).attr("src", image_url2).attr('id','map2')  
+              jQuery(document.createElement("img")).attr("src", image_url).attr('id','map') 
             );  
+            jQuery(document.body).append(  
+              jQuery(document.createElement("img")).attr("src", image_url2).attr('id','map2') 
+            ); 
+
         }  
 
 		translateOptions = function (point){
