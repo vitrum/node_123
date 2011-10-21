@@ -49,11 +49,11 @@
 
 <body>
   <div id="info" class="log"></div>
-  <div>
-    <button id="btnInit" class="btn" >Find my location</button>
+  <div class="menu">
     <button id="btnClen" class="btn btn_red btn_small" >Clearn</button>
     <button id="btnSave" class="btn btn_small" >Save</button>
     <button id="btnLoad" class="btn btn_small" >Load</button>
+    <button id="btnInit" class="btn" >Find my location</button>
   </div> 
 
 
@@ -66,6 +66,10 @@
             jQuery("#btnInit").click(initiate_geolocation); 
             
             jQuery("#btnClen").click(clearn_log); 
+            
+            jQuery("#btnSave").click(save_log); 
+            
+            jQuery("#btnLoad").click(load_log); 
              
         });  
   
@@ -90,7 +94,20 @@
         }  
         
         function clearn_log() {  
-            jQuery("#info").html();
+            var text = "";
+            jQuery("#info").html(text);
+            
+        }  
+        function save_log() {  
+            var text = "";
+            geolocationJson = jQuery("#info").html();
+            jQuery("#info").html(text);
+            
+        }  
+        function load_log() {  
+            var text = "";
+            jQuery("#info").html(text);
+            jQuery("#info").html(geolocationJson);
             
         }  
  
