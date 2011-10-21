@@ -87,21 +87,9 @@
   var touchTime = 1 ;
   var geolocationJson = '';
   var bm = new BMap.Map("container");
-  
-  function getgps(name){
-             this.name = name;
-             this.x = 121.48479060028;
-             this.y = 31.234309729773;
-  }
+  var newgps_x , newgps_y;
 
-  		translateOptions = function (point){
-			bm.clearOverlays();
-			var marker = new BMap.Marker(point);
-			bm.addOverlay(marker);
-			bm.setCenter(point);
-			document.getElementById("baiduXY").innerHTML = point.lng + "," + point.lat;
-		}
-  
+
         jQuery(window).ready(function(){  
             jQuery("#btnInit").click(initiate_geolocation); 
             
@@ -111,7 +99,6 @@
             
             jQuery("#btnLoad").click(load_log); 
             
-
              
         });  
   
@@ -130,47 +117,44 @@
              var text =  "touchTime:" + touchTime + "<br/>Latitude: "  + position.coords.latitude  + "<br/>" +  
                "Longitude: " + position.coords.longitude + "<br/>" +  
                "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
-               "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;  
+               "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;
+			   
             jQuery("#info").prepend(text); 
             touchTime = touchTime + 1 ;
 
-
-            
-
 			/* baidu map */
-            /*
-			var map = new BMap.Map("container");
-            var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
-            map.addControl(new BMap.NavigationControl())
-            map.centerAndZoom(point,17);
-			*/
-			//BMap.Convertor.translate(new BMap.Point(116.397428,39.90923),0,translateOptions);
-
-			
 			var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
-
 
 			bm.centerAndZoom(point, 19);
 			bm.addControl(new BMap.NavigationControl());
 			
 			BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
 
-
 			/*google map image*/
-            var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + getgps.y + "," +  
-                    getgps.x + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
-                    position.coords.latitude + ',' + position.coords.longitude;  
+            /*var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
+                    position.coords.longitude + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
+                    position.coords.latitude + ',' + position.coords.longitude;*/
+			var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + newgps_x + "," +  
+                    newgps_y + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
+                    newgps_x + ',' + newgps_y;
   
             jQuery("#map").remove();  
             jQuery(document.body).append(  
               jQuery(document.createElement("img")).attr("src", image_url).attr('id','map')  
             );  
-
-
-             
         }  
 
+		translateOptions = function (point){
+			bm.clearOverlays();
+			var marker = new BMap.Marker(point);
+			bm.addOverlay(marker);
+			bm.setCenter(point);
+			document.getElementById("baiduXY").innerHTML = point.lng + "," + point.lat;
 
+			newgps_x = point.lng;
+			newgps_y = point.lat;
+			//alert(point.lng + ',' + point.lat);
+		}
 
         function clearn_log() {  
             var text = "";
@@ -277,8 +261,7 @@ function translate(point,type,callback){
     BMap.Convertor[callbackName] = function(xyResult){
         delete BMap.Convertor[callbackName];    //调用完需要删除改函数
         var point = new BMap.Point(xyResult.x, xyResult.y);
-        getgps.x = xyResult.x;
-        getgps.y = xyResult.y;
+		
         callback && callback(point);
     }
 }
