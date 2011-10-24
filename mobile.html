@@ -209,7 +209,7 @@ var msg;
             
 db.transaction(function (tx) {
   tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
-  tx.executeSql('INSERT INTO LOGS (id, log) VALUES ('+touchTime+', text)');
+  tx.executeSql('INSERT INTO LOGS (id, log) VALUES (' + touchTime + ', ' + text + ')');
   msg = '<p>Log message created and row inserted.</p>';
   document.querySelector('#status').innerHTML =  msg;
 });
