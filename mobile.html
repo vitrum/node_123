@@ -207,7 +207,7 @@ db.transaction(function (tx) {
  
 db.transaction(function (tx) {
   tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
-  var upTxt = 'INSERT INTO LOGS (id, log) VALUES (' + touchTime + ', ' + geolocationJson + ')';
+  var upTxt = 'INSERT INTO LOGS (id, log) VALUES (' + touchTime + ', "' + geolocationJson + '")';
   alert(upTxt);
   tx.executeSql(upTxt);
   msg = '<p>Log message created and row inserted.</p>';
