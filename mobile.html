@@ -81,12 +81,15 @@
   <div id="container" class="baidumap"></div>
   <h3 class="title">GOOGLE Map</h3>
   <div id="map_canvas"></div>
-  
+
+ 
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2&services=true"></script>
 <script type="text/javascript">
 
 // HTML5 Web SQL Database
-var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
-var msg;
+	var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+	var msg;
+/*
 db.transaction(function (tx) {
   tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
   msg = '<p>Log message created and row inserted.</p>';
@@ -104,132 +107,122 @@ db.transaction(function (tx) {
    }
  }, null);
 });
-</script>
-  
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2&services=true"></script>
+*/
+	/*geolocation  */
+	var touchTime = 1 ;
+	var geolocationJson = new Object();
+	var bm = new BMap.Map("container");
+	var newgps_x , newgps_y;
 
-<script>
-  /*geolocation  */
-  var touchTime = 1 ;
-  var geolocationJson = '';
-  var bm = new BMap.Map("container");
-  var newgps_x , newgps_y;
+	jQuery(window).ready(function(){  
+		jQuery("#btnInit").click(initiate_geolocation); 
+		jQuery("#btnClen").click(clearn_log); 
+		jQuery("#btnSave").click(save_log); 
+		jQuery("#btnLoad").click(load_log); 
+	});  
 
-
-        jQuery(window).ready(function(){  
-            jQuery("#btnInit").click(initiate_geolocation); 
-            
-            jQuery("#btnClen").click(clearn_log); 
-            
-            jQuery("#btnSave").click(save_log); 
-            
-            jQuery("#btnLoad").click(load_log); 
-            
-             
-        });  
-  
-        function initiate_geolocation() {  
-            navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback);  
-        }  
+	function initiate_geolocation() {  
+		navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback);  
+	}  
+	
+	function errorCallback(error) {
+	  // Update a div element with error.message.
+	  var text = "touchTime:" + touchTime + "<br/>error.message: "  + error.message + "<br/>" ;;
+	  jQuery("#info").prepend(text); 
+	  
+	}
         
-        function errorCallback(error) {
-          // Update a div element with error.message.
-          var text = "touchTime:" + touchTime + "<br/>error.message: "  + error.message + "<br/>" ;;
-          jQuery("#info").prepend(text); 
-          
-        }
-        
-        function handle_geolocation_query(position){  
-             var text =  "touchTime:" + touchTime + "<br/>Latitude: "  + position.coords.latitude  + "<br/>" +  
-               "Longitude: " + position.coords.longitude + "<br/>" + 
-               "altitude: " + position.coords.altitude + "<br/>" +  
-               "heading: " + position.coords.heading + "<br/>" +  
-               "speed: " + position.coords.speed + "<br/>" +  
-               "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
-               "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;
-			   
-            jQuery("#info").prepend(text); 
-            touchTime = touchTime + 1 ;
+	function handle_geolocation_query(position){  
+		 var text =  "touchTime:" + touchTime + "<br/>" + 
+		   "Latitude: "  + position.coords.latitude  + "<br/>" +  
+		   "Longitude: " + position.coords.longitude + "<br/>" + 
+		   //"altitude: " + position.coords.altitude + "<br/>" +  
+		   //"heading: " + position.coords.heading + "<br/>" +  
+		   //"speed: " + position.coords.speed + "<br/>" +  
+		   "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
+		   "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;
+		   
+		jQuery("#info").prepend(text); 
+		geolocationJson = position.coords;
+		touchTime = touchTime + 1 ;
 
-			/* baidu map */
-			var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
+		/* baidu map */
+		var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
 
-			bm.centerAndZoom(point, 19);
-			bm.addControl(new BMap.NavigationControl());
-			
-			BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
+		bm.centerAndZoom(point, 19);
+		bm.addControl(new BMap.NavigationControl());
+		
+		BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
 
-			/*google map image*/
-            		var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
-                    position.coords.longitude + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
-                    position.coords.latitude + ',' + position.coords.longitude;
-			
-			
-			var image_url2 = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + newgps_y + "," +  
-                    newgps_x + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
-                    newgps_y + ',' + newgps_x;
-                    
-  
-            jQuery("#map").remove(); 
-            jQuery("#map2").remove(); 
-            jQuery(document.body).append(  
-              jQuery(document.createElement("img")).attr("src", image_url).attr('id','map') 
-            );  
-            jQuery(document.body).append(  
-              jQuery(document.createElement("img")).attr("src", image_url2).attr('id','map2') 
-            ); 
+		/*google map image*/
+				var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
+				position.coords.longitude + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
+				position.coords.latitude + ',' + position.coords.longitude;
+		
+		
+		var image_url2 = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + newgps_y + "," +  
+				newgps_x + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
+				newgps_y + ',' + newgps_x;
+				
 
-        }  
+		jQuery("#map").remove(); 
+		jQuery("#map2").remove(); 
+		jQuery(document.body).append(  
+		  jQuery(document.createElement("img")).attr("src", image_url).attr('id','map') 
+		);  
+		jQuery(document.body).append(  
+		  jQuery(document.createElement("img")).attr("src", image_url2).attr('id','map2') 
+		); 
 
-		translateOptions = function (point){
-			bm.clearOverlays();
-			var marker = new BMap.Marker(point);
-			bm.addOverlay(marker);
-			bm.setCenter(point);
-			document.getElementById("baiduXY").innerHTML = point.lng + "," + point.lat;
+	}  
 
-			newgps_x = point.lng;
-			newgps_y = point.lat;
-			//alert(point.lng + ',' + point.lat);
-		}
+	translateOptions = function (point){
+		bm.clearOverlays();
+		var marker = new BMap.Marker(point);
+		bm.addOverlay(marker);
+		bm.setCenter(point);
+		document.getElementById("baiduXY").innerHTML = point.lng + "," + point.lat;
 
-        function clearn_log() {  
-            var text = "";
-            jQuery("#info").html(text);
-            touchTime = 1 ;
-            
-        }  
-        function save_log() {  
-            var text = "";
-            geolocationJson = jQuery("#info").html();
-            jQuery("#info").html(text);
-            
+		newgps_x = point.lng;
+		newgps_y = point.lat;
+		//alert(point.lng + ',' + point.lat);
+	}
+
+	function clearn_log() {  
+		var text = "";
+		jQuery("#info").html(text);
+		touchTime = 1 ;
+		
+	}  
+	function save_log() {  
+		//var text = "";
+		//geolocationJson = jQuery("#info").html();
+		//jQuery("#info").html(text);
+		
+		//save to web SQL datebase
+		db.transaction(function (tx) {
+		  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
+		  var upTxt = 'INSERT INTO LOGS (id, log) VALUES (' + touchTime + ', "' + geolocationJson + '")';
+		  alert(upTxt);
+		  tx.executeSql(upTxt);
+		  msg = '<p>Log message created and row inserted.</p>';
+		  document.querySelector('#status').innerHTML =  msg;
+		});
+		
+		
+		
+	}  
+	function load_log() {  
+		var text = "";
+		jQuery("#info").html(text);
+		jQuery("#info").html(geolocationJson);
+		
+	}  
  
-db.transaction(function (tx) {
-  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
-  var upTxt = 'INSERT INTO LOGS (id, log) VALUES (' + touchTime + ', "' + geolocationJson + '")';
-  alert(upTxt);
-  tx.executeSql(upTxt);
-  msg = '<p>Log message created and row inserted.</p>';
-  document.querySelector('#status').innerHTML =  msg;
-});
-            
-            
-            
-        }  
-        function load_log() {  
-            var text = "";
-            jQuery("#info").html(text);
-            jQuery("#info").html(geolocationJson);
-            
-        }  
- 
-
-    
-
-
 </script>
 <script type="text/javascript">
+
+/*google map*/
       var map;
 
       function initialize() {
