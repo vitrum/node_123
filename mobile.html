@@ -172,7 +172,7 @@ db.transaction(function (tx) {
 						'"' + position.coords.longitude + '",'+ 
 						'"' + position.coords.accuracy + '",'+ 
 						'"' + tempTime + '",' ;
-		  var upTxt = 'INSERT INTO LOGS (id unique, latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
+		  var upTxt = 'INSERT INTO LOGS (id , latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
 		  alert(upTxt);
 		  tx.executeSql(upTxt);
 		  msg = '<p>Log message created and row inserted.</p>';
