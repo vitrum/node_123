@@ -171,7 +171,7 @@ db.transaction(function (tx) {
 		  var tmpTxt = '"' + position.coords.latitude + '",' + 
 						'"' + position.coords.longitude + '",'+ 
 						'"' + position.coords.accuracy + '",'+ 
-						'"' + tempTime + '",' ;
+						'"' + tempTime + '"' ;
 		  var upTxt = 'INSERT INTO LOGS (id , latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
 		  alert(upTxt);
 		  tx.executeSql(upTxt);
