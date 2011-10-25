@@ -87,7 +87,7 @@
 <script type="text/javascript">
 
 // HTML5 Web SQL Database
-	var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+	var db = openDatabase('node_123', '1.0', 'Test DB', 2 * 1024 * 1024);
 	var msg;
 /*
 db.transaction(function (tx) {
@@ -133,6 +133,7 @@ db.transaction(function (tx) {
 	}
         
 	function handle_geolocation_query(position){  
+		 var tempTime = new Date(position.timestamp);
 		 var text =  "touchTime:" + touchTime + "<br/>" + 
 		   "Latitude: "  + position.coords.latitude  + "<br/>" +  
 		   "Longitude: " + position.coords.longitude + "<br/>" + 
@@ -140,10 +141,10 @@ db.transaction(function (tx) {
 		   //"heading: " + position.coords.heading + "<br/>" +  
 		   //"speed: " + position.coords.speed + "<br/>" +  
 		   "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
-		   "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;
+		   "Time: " + tempTime + "<br/><br/>" ;
 		   
 		jQuery("#info").prepend(text); 
-		geolocationJson = position.coords;
+		
 		touchTime = touchTime + 1 ;
 
 		/* baidu map */
@@ -164,6 +165,20 @@ db.transaction(function (tx) {
 				newgps_x + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
 				newgps_y + ',' + newgps_x;
 				
+		//save to web SQL datebase
+		db.transaction(function (tx) {
+		  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, latitude, longitude ,accuracy ,timestamp )');
+		  var tmpTxt = '"' + position.coords.latitude + '",' + 
+						'"' + position.coords.longitude + '",'+ 
+						'"' + position.coords.accuracy + '",'+ 
+						'"' + tempTime + '",' ;
+		  var upTxt = 'INSERT INTO LOGS (id, log) VALUES (' + touchTime + ', ' + tmpTxt + ')';
+		  alert(upTxt);
+		  tx.executeSql(upTxt);
+		  msg = '<p>Log message created and row inserted.</p>';
+		  document.querySelector('#status').innerHTML =  msg;
+		});
+
 
 		jQuery("#map").remove(); 
 		jQuery("#map2").remove(); 
@@ -195,19 +210,11 @@ db.transaction(function (tx) {
 		
 	}  
 	function save_log() {  
-		//var text = "";
-		//geolocationJson = jQuery("#info").html();
-		//jQuery("#info").html(text);
+		var text = "";
+		geolocationJson = jQuery("#info").html();
+		jQuery("#info").html(text);
 		
-		//save to web SQL datebase
-		db.transaction(function (tx) {
-		  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
-		  var upTxt = 'INSERT INTO LOGS (id, log) VALUES (' + touchTime + ', "' + geolocationJson + '")';
-		  alert(upTxt);
-		  tx.executeSql(upTxt);
-		  msg = '<p>Log message created and row inserted.</p>';
-		  document.querySelector('#status').innerHTML =  msg;
-		});
+
 		
 		
 		
