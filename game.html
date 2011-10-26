@@ -19,17 +19,20 @@
 </head>
 
 <body>
-	<div id="console_wrapper">   
-		<pre id="console"></pre>   
-		<input type="text" name="console_input" id="console_input" value="" />   
-		<input type="submit" name="console_send" id="console_send" value="Send" />   
-	</div> 
+<h1>Web Socket Chat</h1>   
+   
 <div id="server_wrapper">   
     <p>Server  
         <input type="text" name="host" id="host" value="ws://ec2-184-73-9-238.compute-1.amazonaws.com:8080/" />   
-        <input type="submit" name="host_connect" id="host_connect" value="重新连接" />   
+        <input type="submit" name="host_connect" id="host_connect" value="host_connect" />   
     </p>  
-</div> 
+</div>   
+   
+<div id="console_wrapper">   
+    <pre id="console"></pre>   
+    <input type="text" name="console_input" id="console_input" value="" />   
+    <input type="submit" name="console_send" id="console_send" value="Send" />   
+</div>   
 
 
 	<div id="status" name="status">Status Message</div>
