@@ -94,7 +94,7 @@ $('#host_connect').click(function () {
 });  
 
 // the user clicked the send button  
-
+/*
 $('#console_send').click(function () {  
 	var locationInfo ;
 	db.transaction(function (tx) {
@@ -104,7 +104,13 @@ $('#console_send').click(function () {
 			});
 	ws_send(locationInfo);  
 });  
+*/  
 
+// the user clicked the send button  
+        $('#console_send').click(function () {  
+            ws_send($('#console_input').val());  
+        });  
+          
         $('#console_input').keyup(function (e) {  
             if(e.keyCode == 13) // enter is pressed  
                 ws_send($('#console_input').val());  
