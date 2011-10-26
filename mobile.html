@@ -140,7 +140,8 @@ db.transaction(function (tx) {
 	  
 	}
         
-	function handle_geolocation_query(position){  
+	function handle_geolocation_query(position){ 
+		var tempTime = new Date(position.timestamp);
 		 var text =  "touchTime:" + touchTime + "<br/>" + 
 		   "Latitude: "  + position.coords.latitude  + "<br/>" +  
 		   "Longitude: " + position.coords.longitude + "<br/>" + 
@@ -148,7 +149,7 @@ db.transaction(function (tx) {
 		   //"heading: " + position.coords.heading + "<br/>" +  
 		   //"speed: " + position.coords.speed + "<br/>" +  
 		   "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
-		   "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;
+		   "Time: " + tempTime + "<br/><br/>" ;
 		   
 		jQuery("#info").prepend(text); 
 		geolocationJson = position.coords;
