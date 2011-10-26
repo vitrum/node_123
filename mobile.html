@@ -203,25 +203,11 @@ db.transaction(function (tx) {
 		
 	}  
 	function save_log() {  
-		//var text = "";
-		//geolocationJson = jQuery("#info").html();
-		//jQuery("#info").html(text);
+		var text = "";
+		geolocationJson = jQuery("#info").html();
+		jQuery("#info").html(text);
 		
-<<<<<<< HEAD
-		//save to web SQL datebase
-		db.transaction(function (tx) {
-		  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
-		  var upTxt = 'INSERT INTO LOGS (id, log) VALUES (' + touchTime + ', "' + geolocationJson + '")';
-		  alert(upTxt);
-		  tx.executeSql(upTxt);
-		  msg = '<p>Log message created and row inserted.</p>';
-		  document.querySelector('#status').innerHTML =  msg;
-		});
-		
-		
-		
-=======
->>>>>>> 88f1d98f6eec1f9c27d31aa806978296a26c1d23
+
 	}  
 	function load_log() {  
 		var text = "";
