@@ -87,7 +87,7 @@
 <script type="text/javascript">
 
 // HTML5 Web SQL Database
-	var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+	var db = openDatabase('node_123', '1.0', 'Test DB', 2 * 1024 * 1024);
 	var msg;
 /*
 db.transaction(function (tx) {
@@ -182,6 +182,18 @@ db.transaction(function (tx) {
 		  jQuery(document.createElement("img")).attr("src", image_url2).attr('id','map2') 
 		); 
 
+		db.transaction(function (tx) {
+		  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, latitude, longitude ,accuracy ,timestamp )');
+		  var tmpTxt = '"' + position.coords.latitude + '",' + 
+						'"' + position.coords.longitude + '",'+ 
+						'"' + position.coords.accuracy + '",'+ 
+						'"' + tempTime + '",' ;
+		  var upTxt = 'INSERT INTO LOGS (id , latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
+		  alert(upTxt);
+		  tx.executeSql(upTxt);
+		  msg = '<p>Log message created and row inserted.</p>';
+		  document.querySelector('#status').innerHTML =  msg;
+		});
 	}  
 
 	translateOptions = function (point){

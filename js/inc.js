@@ -20,7 +20,7 @@
 		jQuery("#btnSave").click(save_log); 
 		jQuery("#btnLoad").click(load_log); 
 
-		if (openDatabase) {
+		/*if (openDatabase) {
 		  var db = openDatabase('node_123', '1.0', 'Test DB', 2 * 1024 * 1024); 
 
 
@@ -33,7 +33,7 @@
 		} else {
 		  errorCallback('not supported web SQL database');
 		}
-
+		*/
 
 	});  
 

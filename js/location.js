@@ -35,18 +35,12 @@
 		/* baidu map */
 		var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
 
-		bm.centerAndZoom(point, 19);
+		bm.centerAndZoom(point, 15);
 		bm.addControl(new BMap.NavigationControl());
 		
 		BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
 
-		/*
 
-		window.BMap = window.BMap || {};
-		BMap.Convertor = {};
-		BMap.Convertor.translate = translate;
-		})();
-		*/
 	}  
 
 	translateOptions = function (point){
@@ -95,7 +89,7 @@
 
 
      
-	 /*百度 马屁*/
+	 /*百度 马屁
 (function(){        //闭包
 	function load_script(xyUrl, callback){
 		var head = document.getElementsByTagName('head')[0];
@@ -133,3 +127,5 @@
 	BMap.Convertor = {};
 	BMap.Convertor.translate = translate;
 })();
+
+*/
