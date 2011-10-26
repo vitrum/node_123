@@ -3,7 +3,7 @@
 	
 	var touchTime = 1 ;	
 	var msg;
-
+	var db = openDatabase('node_123', '1.0', 'Test DB', 2 * 1024 * 1024); 
 
 
 
@@ -21,7 +21,7 @@
 		jQuery("#btnLoad").click(load_log); 
 
 		if (openDatabase) {
-		  var db = openDatabase('node_123', '1.0', 'Test DB', 2 * 1024 * 1024); 
+		  
 
 
 			db.transaction(function (tx) {

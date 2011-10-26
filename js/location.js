@@ -13,7 +13,7 @@
 	function errorCallback(msg) {
 	  // Update a div element with error.message.
 	  var s = document.querySelector('#status');
-	  s.innerHTML = typeof msg == 'string' ? msg : "failed";
+	  s.innerHTML = typeof msg == 'string' ? msg : "failed to get geolacation";
 	  s.className = 'fail';
 	  
 	}
