@@ -18,11 +18,15 @@
 
 
 
-$(document).ready(function () {
+
 	jQuery(window).ready(function(){  
 		jQuery("#btnInit").click(initiate_geolocation); 
 		jQuery("#btnClen").click(clearn_log); 
 		jQuery("#btnSave").click(save_log); 
 		jQuery("#btnLoad").click(load_log); 
+
+
+
+
 	});  
-});
+);
