@@ -46,6 +46,8 @@
 			document.querySelector('#status').innerHTML =  msg;
 		});
 
+		ws_send(tmpTxt); 
+
 		/* baidu map 
 		var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
 
