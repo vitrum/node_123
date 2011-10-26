@@ -19,15 +19,16 @@
 	}
         
 	function handle_geolocation_query(position){  
-		 var text =  "touchTime:" + touchTime + "<br/>" + 
-		   "Latitude: "  + position.coords.latitude  + "<br/>" +  
-		   "Longitude: " + position.coords.longitude + "<br/>" + 
-		   //"altitude: " + position.coords.altitude + "<br/>" +  
-		   //"heading: " + position.coords.heading + "<br/>" +  
-		   //"speed: " + position.coords.speed + "<br/>" +  
-		   "Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
-		   "Time: " + new Date(position.timestamp)+ "<br/><br/>" ;
-		   
+		var tempTime = new Date(position.timestamp);
+		var text =  "touchTime:" + touchTime + "<br/>" + 
+				"Latitude: "  + position.coords.latitude  + "<br/>" +  
+				"Longitude: " + position.coords.longitude + "<br/>" + 
+				//"altitude: " + position.coords.altitude + "<br/>" +  
+				//"heading: " + position.coords.heading + "<br/>" +  
+				//"speed: " + position.coords.speed + "<br/>" +  
+				"Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
+				"Time: " + new Date(position.timestamp)+ "<br/><br/>" ;
+
 		jQuery("#info").prepend(text); 
 		geolocationJson = position.coords;
 		touchTime = touchTime + 1 ;
@@ -37,10 +38,21 @@
 
 		bm.centerAndZoom(point, 15);
 		bm.addControl(new BMap.NavigationControl());
-		
+
 		BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
 
-
+		db.transaction(function (tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, latitude, longitude ,accuracy ,timestamp )');
+			var tmpTxt = '"' + position.coords.latitude + '",' + 
+						'"' + position.coords.longitude + '",'+ 
+						'"' + position.coords.accuracy + '",'+ 
+						'"' + tempTime + '"' ;
+			var upTxt = 'INSERT INTO LOGS (id , latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
+			alert(upTxt);
+			tx.executeSql(upTxt);
+			msg = '<p>Log message created and row inserted. ' + upTxt + '</p>';
+			document.querySelector('#status').innerHTML =  msg;
+		});
 	}  
 
 	translateOptions = function (point){
