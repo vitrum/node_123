@@ -118,3 +118,105 @@ function getNewLocationInfo(msg, type) {
 };
 
 
+function initiate_geolocation() {  
+
+		if (navigator.geolocation) {
+		  navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback);  
+		} else {
+		  errorCallback('not supported');
+		}
+
+	}  
+
+	function errorCallback(msg) {
+	  // Update a div element with error.message.
+	  var s = document.querySelector('#status');
+	  s.innerHTML = typeof msg == 'string' ? msg : "failed to get geolacation";
+	  s.className = 'fail';
+	  
+	}
+        
+	function handle_geolocation_query(position){  
+		var tempTime = new Date(position.timestamp);
+		touchTime = touchTime + 1 ;
+		var text =  "touchTime:" + touchTime + "<br/>" + 
+				"Latitude: "  + position.coords.latitude  + "<br/>" +  
+				"Longitude: " + position.coords.longitude + "<br/>" + 
+				//"altitude: " + position.coords.altitude + "<br/>" +  
+				//"heading: " + position.coords.heading + "<br/>" +  
+				//"speed: " + position.coords.speed + "<br/>" +  
+				"Accuracy: "  + position.coords.accuracy  + "m<br/>" +  
+				"Time: " + new Date(position.timestamp)+ "<br/><br/>" ;
+
+		jQuery("#info").prepend(text); 
+		geolocationJson = position.coords;
+		
+		db.transaction(function (tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, latitude, longitude ,accuracy ,timestamp )');
+			var tmpTxt = '"' + position.coords.latitude + '",' + 
+						'"' + position.coords.longitude + '",'+ 
+						'"' + position.coords.accuracy + '",'+ 
+						'"' + tempTime + '"' ;
+			var upTxt = 'INSERT INTO LOGS (id , latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
+			//alert(upTxt);
+			tx.executeSql(upTxt);
+			msg = '<p>Log message created and row inserted. ' + upTxt + '</p>';
+			document.querySelector('#status').innerHTML =  msg;
+		});
+
+		ws_send(tmpTxt); 
+
+		/* baidu map 
+		var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
+
+		bm.centerAndZoom(point, 19);
+		bm.addControl(new BMap.NavigationControl());
+		
+		BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
+		*/
+
+	}  
+
+	translateOptions = function (point){
+		bm.clearOverlays();
+		var marker = new BMap.Marker(point);
+		bm.addOverlay(marker);
+		bm.setCenter(point);
+		document.getElementById("baiduXY").innerHTML = point.lng + "," + point.lat;
+
+		newgps_x = point.lng;
+		newgps_y = point.lat;
+		//alert(point.lng + ',' + point.lat);
+	}
+
+	function clearn_log() {  
+		var text = "";
+		jQuery("#info").html(text);
+		touchTime = 1 ;
+		
+	}  
+	function save_log() {  
+		var text = "";
+		geolocationJson = jQuery("#info").html();
+		jQuery("#info").html(text);
+		
+
+	}  
+	function load_log() {  
+		var text = "";
+		jQuery("#info").html(text);
+		jQuery("#info").html(geolocationJson);
+
+		//load web sql
+		db.transaction(function (tx) {
+		  tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+		   var len = results.rows.length, i;
+		   msg = "<p>Found rows: " + len + "</p>";
+		   document.querySelector('#status').innerHTML +=  msg;
+		   for (i = 0; i < len; i++){
+			 msg = "<p><b>touchNo. :" + results.rows.item(i).id + "</b>, Time :" + results.rows.item(i).timestamp + "</p>";
+			 document.querySelector('#status').innerHTML +=  msg;
+		   }
+		 }, null);
+		});
+	}  
