@@ -43,6 +43,26 @@
 		} else {
 			debug("Browser does not support web sockets", 'error');
 		};
+
+		// the user clicked the send button  
+        $('#console_send').click(function () {  
+            ws_send($('#console_input').val());  
+				var locationInfo ;
+				db.transaction(function (tx) {
+				tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
+					locationInfo = results.rows.item(0).latitude + ',' = results.rows.item(0).longitude ;
+				}, null);
+				alert(locationInfo);
+			});
+        });  
+          
+        $('#console_input').keyup(function (e) {  
+            if(e.keyCode == 13) // enter is pressed  
+                ws_send($('#console_input').val());  
+        }); 
+
+
+
 	});  
 
 // function to send data on the web socket
@@ -103,15 +123,6 @@ $('#console_send').click(function () {
 				}, null);
 			});
 	ws_send(locationInfo);  
-});  
+});   
 */  
 
-// the user clicked the send button  
-        $('#console_send').click(function () {  
-            ws_send($('#console_input').val());  
-        });  
-          
-        $('#console_input').keyup(function (e) {  
-            if(e.keyCode == 13) // enter is pressed  
-                ws_send($('#console_input').val());  
-        }); 
