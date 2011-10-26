@@ -111,15 +111,7 @@ db.transaction(function (tx) {
 	/*geolocation  */
 	
 var touchTime = 1 ;	
-db.transaction(function (tx) {
-  tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
 
-   for (i = 0; i < 1; i++){
-     msg = "<p><b>" + results.rows.item(i).id + "</b></p>";
-     document.querySelector('#status').innerHTML +=  msg;
-     alert(msg);
-   }
- }, null);
 	
 	
 	var geolocationJson = new Object();
@@ -226,7 +218,15 @@ db.transaction(function (tx) {
 		geolocationJson = jQuery("#info").html();
 		jQuery("#info").html(text);
 		
-
+db.transaction(function (tx) {
+  tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+	alert(results);
+   for (i = 0; i < 1; i++){
+     msg = "<p><b>" + results.rows.item(i).id + "</b></p>";
+     document.querySelector('#status').innerHTML +=  msg;
+     alert(msg);
+   }
+ }, null);
 		
 		
 		
