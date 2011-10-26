@@ -162,14 +162,8 @@ function initiate_geolocation() {
 			tx.executeSql(upTxt);
 			msg = '<p>Log message created and row inserted. ' + upTxt + '</p>';
 			document.querySelector('#status').innerHTML =  msg;
-			var jsonTxt = "
-				{   
-				root:   
-				[   
-				{'latitude':'"+ position.coords.latitude +"','longitude':'"+ position.coords.longitude +"'}
-				]  
-				}";  
-			var jsonTxtObj=eval("("+jsonTxt+")");
+			var jsonTxt = "['latitude':'"+ position.coords.latitude +"','longitude':'"+ position.coords.longitude +"']";  
+			var jsonTxtObj = jsonTxt;
 			ws_send(jsonTxtObj); 
 		});
 
