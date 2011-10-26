@@ -229,9 +229,13 @@ db.transaction(function (tx) {
 		jQuery("#info").html(geolocationJson);
 db.transaction(function (tx) {
   tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
-	alert(results);
-	msg = "<p><b>" + results.rows.item(0).id + "</b></p>";
-	alert(msg);
+   var len = results.rows.length, i;
+   msg = "<p>Found rows: " + len + "</p>";
+   document.querySelector('#status').innerHTML +=  msg;
+   for (i = 0; i < len; i++){
+     msg = "<p><b>" + results.rows.item(i).id + "</b>" + results.rows.item(i).timestamp + "</p>";
+     document.querySelector('#status').innerHTML +=  msg;
+   }
  }, null);
 });
 	}  
