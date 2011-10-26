@@ -162,7 +162,7 @@ db.transaction(function (tx) {
 		
 		BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
 
-		/*google map image*/
+		/*google map image
 				var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
 				position.coords.longitude + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
 				position.coords.latitude + ',' + position.coords.longitude;
@@ -181,7 +181,7 @@ db.transaction(function (tx) {
 		jQuery(document.body).append(  
 		  jQuery(document.createElement("img")).attr("src", image_url2).attr('id','map2') 
 		); 
-
+		*/
 		db.transaction(function (tx) {
 		  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, latitude, longitude ,accuracy ,timestamp )');
 		  var tmpTxt = '"' + position.coords.latitude + '",' + 
@@ -191,7 +191,7 @@ db.transaction(function (tx) {
 		  var upTxt = 'INSERT INTO LOGS (id , latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
 		  alert(upTxt);
 		  tx.executeSql(upTxt);
-		  msg = '<p>Log message created and row inserted.</p>';
+		  msg = '<p>Log message created and row inserted. ' + upTxt + '</p>';
 		  document.querySelector('#status').innerHTML =  msg;
 		});
 	}  
