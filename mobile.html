@@ -109,7 +109,18 @@ db.transaction(function (tx) {
 });
 */
 	/*geolocation  */
-	var touchTime = 1 ;
+	
+var touchTime = 1 ;	
+db.transaction(function (tx) {
+  tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+
+   for (i = 0; i < 1; i++){
+     msg = "<p><b>" + results.rows.item(i).id + "</b></p>";
+     document.querySelector('#status').innerHTML +=  msg;
+   }
+ }, null);
+	
+	
 	var geolocationJson = new Object();
 	var bm = new BMap.Map("container");
 	var newgps_x , newgps_y;
