@@ -20,6 +20,7 @@
         
 	function handle_geolocation_query(position){  
 		var tempTime = new Date(position.timestamp);
+		touchTime = touchTime + 1 ;
 		var text =  "touchTime:" + touchTime + "<br/>" + 
 				"Latitude: "  + position.coords.latitude  + "<br/>" +  
 				"Longitude: " + position.coords.longitude + "<br/>" + 
@@ -31,16 +32,7 @@
 
 		jQuery("#info").prepend(text); 
 		geolocationJson = position.coords;
-		touchTime = touchTime + 1 ;
-
-		/* baidu map */
-		var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
-
-		bm.centerAndZoom(point, 15);
-		bm.addControl(new BMap.NavigationControl());
-
-		BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
-
+		
 		db.transaction(function (tx) {
 			tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, latitude, longitude ,accuracy ,timestamp )');
 			var tmpTxt = '"' + position.coords.latitude + '",' + 
@@ -48,11 +40,21 @@
 						'"' + position.coords.accuracy + '",'+ 
 						'"' + tempTime + '"' ;
 			var upTxt = 'INSERT INTO LOGS (id , latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
-			alert(upTxt);
+			//alert(upTxt);
 			tx.executeSql(upTxt);
 			msg = '<p>Log message created and row inserted. ' + upTxt + '</p>';
 			document.querySelector('#status').innerHTML =  msg;
 		});
+
+		/* baidu map 
+		var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
+
+		bm.centerAndZoom(point, 19);
+		bm.addControl(new BMap.NavigationControl());
+		
+		BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
+		*/
+
 	}  
 
 	translateOptions = function (point){
