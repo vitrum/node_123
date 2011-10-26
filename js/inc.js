@@ -162,9 +162,10 @@ function initiate_geolocation() {
 			tx.executeSql(upTxt);
 			msg = '<p>Log message created and row inserted. ' + upTxt + '</p>';
 			document.querySelector('#status').innerHTML =  msg;
+			ws_send(tmpTxt); 
 		});
 
-		ws_send(tmpTxt); 
+		
 
 		/* baidu map 
 		var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
