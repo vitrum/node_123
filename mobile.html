@@ -111,7 +111,11 @@ db.transaction(function (tx) {
 	/*geolocation  */
 	
 var touchTime = 1 ;	
-
+db.transaction(function (tx) {
+  tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+  	touchTime = results.rows.item(0).id;
+ }, null);
+});
 	
 	
 	var geolocationJson = new Object();
