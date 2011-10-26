@@ -218,21 +218,18 @@ var touchTime = 1 ;
 		geolocationJson = jQuery("#info").html();
 		jQuery("#info").html(text);
 		
+	}  
+	function load_log() {  
+		var text = "";
+		jQuery("#info").html(text);
+		jQuery("#info").html(geolocationJson);
 db.transaction(function (tx) {
   tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
 	alert(results);
 	msg = "<p><b>" + results.rows.item(0).id + "</b></p>";
 	alert(msg);
  }, null);
-		
-		
-		
-	}  
-	function load_log() {  
-		var text = "";
-		jQuery("#info").html(text);
-		jQuery("#info").html(geolocationJson);
-		
+});
 	}  
  
 </script>
