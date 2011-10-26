@@ -221,11 +221,8 @@ var touchTime = 1 ;
 db.transaction(function (tx) {
   tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
 	alert(results);
-   for (i = 0; i < 1; i++){
-     msg = "<p><b>" + results.rows.item(i).id + "</b></p>";
-     document.querySelector('#status').innerHTML +=  msg;
-     alert(msg);
-   }
+	msg = "<p><b>" + results.rows.item(0).id + "</b></p>";
+	alert(msg);
  }, null);
 		
 		
