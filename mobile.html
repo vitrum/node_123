@@ -109,7 +109,15 @@ db.transaction(function (tx) {
 });
 */
 	/*geolocation  */
-	var touchTime = 1 ;
+	
+var touchTime = 1 ;	
+db.transaction(function (tx) {
+  tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
+  	touchTime = results.rows.item(0).id + 1;
+ }, null);
+});
+	
+	
 	var geolocationJson = new Object();
 	var bm = new BMap.Map("container");
 	var newgps_x , newgps_y;
@@ -199,6 +207,7 @@ db.transaction(function (tx) {
 		//geolocationJson = jQuery("#info").html();
 		//jQuery("#info").html(text);
 		
+<<<<<<< HEAD
 		//save to web SQL datebase
 		db.transaction(function (tx) {
 		  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
@@ -211,12 +220,24 @@ db.transaction(function (tx) {
 		
 		
 		
+=======
+>>>>>>> 88f1d98f6eec1f9c27d31aa806978296a26c1d23
 	}  
 	function load_log() {  
 		var text = "";
 		jQuery("#info").html(text);
 		jQuery("#info").html(geolocationJson);
-		
+		db.transaction(function (tx) {
+		  tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+		   var len = results.rows.length, i;
+		   msg = "<p>Found rows: " + len + "</p>";
+		   document.querySelector('#status').innerHTML +=  msg;
+		   for (i = 0; i < len; i++){
+			 msg = "<p><b>touchNo. :" + results.rows.item(i).id + "</b>, Time :" + results.rows.item(i).timestamp + "</p>";
+			 document.querySelector('#status').innerHTML +=  msg;
+		   }
+		 }, null);
+		});
 	}  
  
 </script>
