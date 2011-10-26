@@ -113,7 +113,7 @@ db.transaction(function (tx) {
 var touchTime = 1 ;	
 db.transaction(function (tx) {
   tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
-  	touchTime = results.rows.item(0).id;
+  	touchTime = results.rows.item(0).id + 1;
  }, null);
 });
 	
