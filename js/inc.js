@@ -44,24 +44,35 @@
 			debug("Browser does not support web sockets", 'error');
 		};
 
+
+		// the user clicked to 'reconnect' button  
+		$('#host_connect').click(function () {  
+			debug("\n");  
+			connect($('#host').val());  
+		});  
+
 		// the user clicked the send button  
+		/*
+		$('#console_send').click(function () {  
+			var locationInfo ;
+			db.transaction(function (tx) {
+						tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
+							locationInfo = results.rows.item(0).latitude + ',' = results.rows.item(0).longitude ;
+						}, null);
+					});
+			ws_send(locationInfo);  
+		});   
+		*/  
+
         $('#console_send').click(function () {  
             ws_send($('#console_input').val());  
-				var locationInfo ;
-				db.transaction(function (tx) {
-				tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
-					locationInfo = results.rows.item(0).latitude + ',' = results.rows.item(0).longitude ;
-				}, null);
-				alert(locationInfo);
-			});
+
         });  
           
         $('#console_input').keyup(function (e) {  
             if(e.keyCode == 13) // enter is pressed  
                 ws_send($('#console_input').val());  
         }); 
-
-
 
 	});  
 
@@ -106,23 +117,4 @@ function getNewLocationInfo(msg, type) {
 	$("#console").append('<p class="' + (type || '') + '">' + msg + '</p>');  
 };
 
-
-// the user clicked to 'reconnect' button  
-$('#host_connect').click(function () {  
-	debug("\n");  
-	connect($('#host').val());  
-});  
-
-// the user clicked the send button  
-/*
-$('#console_send').click(function () {  
-	var locationInfo ;
-	db.transaction(function (tx) {
-				tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
-					locationInfo = results.rows.item(0).latitude + ',' = results.rows.item(0).longitude ;
-				}, null);
-			});
-	ws_send(locationInfo);  
-});   
-*/  
 
