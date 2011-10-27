@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta name="viewport" content="user-scalable=no, width=device-width"  />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<link rel="stylesheet" media="all" href="css/style.css" />
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>  
+
+
+	<script src="js/persistence.js" type="application/javascript"></script>
+	<script src="js/persistence.store.sql.js" type="application/javascript"></script>
+	<script src="js/persistence.store.websql.js" type="application/javascript"></script>
+
+	<script src="js/inc.js" type="text/javascript"></script>
+	
+	<title>vitrum/node_123 @ GitHub/ orm test</title>
+</head>
+
+<body>
+	<h1>ORM test</h1>   
+   <div data-role="page" data-theme="b" id="jqm-home">
+      <div id="jqm-homeheader">
+        <h1 id="jqm-logo"><img src="assets/jquery-logo.png" alt="jQuery Mobile Framework" width="235" height="61" /></h1>
+        <p>Touch-Optimized Web Framework for Smartphones &amp; Tablets - now with PersistenceJS integration</p>
+        <p id="jqm-version">Alpha Release</p>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+          <li data-role="list-divider">Local persistence demos</li>
+          <li><a href="docs/text.html">Text only</a></li>
+          <li><a href="docs/text_and_images.html">Text and images</a></li>
+          <li><a href="#form_submission">Form submission</a></li>
+        </ul>
+      </div>
+      <a id="reset" href="#" data-role="button" data-theme="c" class="ui-btn-right">Reset DB</a>
+    </div>
+
+    <div data-role="page" id="form_submission">
+      <div data-role="header">
+        <h1>Form submission</h1>
+      </div><!-- /header -->
+      <div data-role="content">
+        <form action="order/form-fake-response.html" method="post">
+          <fieldset>
+            <div data-role="fieldcontain">
+              <label for="shipping" class="select">Formsubmission (GET):</label>
+              <select name="shipping" id="shipping">
+                <option value="Standard shipping">Standard: 7 day</option>
+                <option value="Rush shipping">Rush: 3 days</option>
+                <option value="Express shipping">Express: next day</option>
+                <option value="Overnight shipping">Overnight</option>
+              </select>
+            </div>
+          <button type="submit" data-theme="a">Submit</button>
+        </fieldset>
+        </form>
+      </div>
+    </div>
+
+	<script type="text/javascript">
+      if (location.protocol == "file:") {
+        alert("Didn't you read the README ? You need to load this page from a server.");
+      }
+      if (window.openDatabase) {
+        persistence.store.websql.config(persistence, "abab", 'database', 5 * 1024 * 1024);
+      } else {
+        persistence.store.memory.config(persistence);
+      }
+      persistence.define('Page', {
+        path: "TEXT",
+        data: "TEXT",
+      });
+      
+      persistence.define('Image', {
+        path: "TEXT",
+        data: "TEXT",
+      });
+      
+      persistence.define('Order', {
+        shipping: "TEXT"
+      });
+      
+      //persistence.schemaSync();
+
+      $('#reset').click(function() {
+        persistence.reset();
+        persistence.schemaSync();
+        return false;
+      });
+    </script>
+
+
+</body>
+</html>

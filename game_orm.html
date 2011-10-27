@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta name="viewport" content="user-scalable=no, width=device-width"  />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<link rel="stylesheet" media="all" href="css/style.css" />
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>  
+	<script src="http://api.map.baidu.com/api?v=1.2&services=true" type="text/javascript"></script>
+	<script src="http://dev.baidu.com/wiki/static/map/API/examples/script/convertor.js" type="text/javascript"></script>
+
+	<script src="js/persistence.js" type="application/javascript"></script>
+	<script src="js/persistence.store.sql.js" type="application/javascript"></script>
+	<script src="js/persistence.store.websql.js" type="application/javascript"></script>
+
+	<script src="js/inc.js" type="text/javascript"></script>
+	
+	<title>vitrum/node_123 @ GitHub</title>
+</head>
+
+<body>
+<h1>Web Socket Chat use safari</h1>   
+   
+<div id="server_wrapper">   
+    <p>Server  
+        <input type="text" name="host" id="host" value="ws://ec2-184-73-9-238.compute-1.amazonaws.com:8080/" />   
+        <input type="submit" name="host_connect" id="host_connect" value="host_connect" />   
+    </p>  
+</div>   
+   
+<div id="console_wrapper">   
+    <pre id="console"></pre>   
+    <input type="text" name="console_input" id="console_input" value="" />   
+    <input type="submit" name="console_send" id="console_send" value="Send" />   
+</div>   
+
+
+	<div id="status" name="status">Status Message</div>
+	<div id="info" class="log"></div>
+	<div class="menu">
+		<button id="btnClen" class="btn btn_red btn_small" >Clearn</button>
+		<button id="btnSave" class="btn btn_small" >Save</button>
+		<button id="btnLoad" class="btn btn_small" >Load</button>
+		<button id="btnInit" class="btn" >Find my location</button>
+  
+	</div> 
+	<!--
+	<input value='GPS->baidu' type='button' onclick='alert("GPS->baidu");BMap.Convertor.translate(new BMap.Point(116.397428,39.90923),0,translateOptions);' />
+	-->
+	<h3 class="title">Baidu Map</h3>
+	<p class="title">baidu gps:<span id='baiduXY'> </span></p>
+	<div id="container" class="baidumap"></div>
+	<h3 class="title">GOOGLE Map</h3>
+	<div id="map_canvas"></div>
+</body>
+</html>
