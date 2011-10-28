@@ -5,3 +5,61 @@ git clone https://github.com/vitrum/node_123.git
 
 
 http://vitrum.github.com/node_123
+
+
+
+基于HTML5的手机碰撞小游戏
+
+谷歌纵横
+
+
+1.基于websocket
+2.HTML5物理地址获取
+3.nodejs服务器端广播地址
+4.客户端基于地址实现碰撞（后期提供选择对手）
+5.碰撞客户进游戏房间并提供游戏参数
+6.服务器端协商胜利者并发给消息给房间内客户
+
+
+1.基本构架
+
+nodejs 环境
+
+npm
+websocket-server
+epxress
+web SQL database
+
+
+
+
+
+Server 端
+80端口
+
+
+8080端口
+1，接受登录请求，发送ID
+2，接受坐标信息，维护地图表
+3，根据地图表广播坐标信息
+4，接受事件结果，更新ID信息。
+
+
+
+Client 端
+0，登录websocket，获取ID
+1，获取客户端本地GPS地址
+     GPS坐标转换成google 和百度地图坐标
+2，提交坐标到服务器
+3，接受服务器广播的地址（对象：用户或事件）
+4，渲染其他地址
+5，碰撞
+     
+
+
+
+
+web SQL database的使用
+1，作为JS和CSS的本地存储控制
+2，存储地理位置日志
+3，存储游戏日志
