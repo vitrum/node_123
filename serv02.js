@@ -1,11 +1,11 @@
 //msg and save to mysql
 
 var conns = new Array(); 
-var mysql = require('mysql');
+
 var ws = require('./lib/ws/server');  
 var server = ws.createServer();  
 
-
+var mysql = require('mysql');
 var TEST_DATABASE = 'node123';
 var TEST_TABLE = 'location';
 var client = mysql.createClient({
@@ -13,7 +13,7 @@ var client = mysql.createClient({
   password: '123456',
 });
 
-client.query('CREATE TEMPORARY DATABASE '+TEST_DATABASE, function(err) {
+client.query('CREATE DATABASE '+TEST_DATABASE, function(err) {
   if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
     throw err;
   }
