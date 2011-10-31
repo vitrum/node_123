@@ -22,7 +22,7 @@
 		jQuery("#btnClen").click(clearn_log); 
 		jQuery("#btnSave").click(save_log); 
 		jQuery("#btnLoad").click(load_log); 
-		jQuery("#btnSync").click(Sync_log); 
+		jQuery("#btnSync").click(sync_log); 
 		
 		//load database
 		if (openDatabase) {
