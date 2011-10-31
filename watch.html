@@ -41,6 +41,7 @@
 	
 	var touchTime = 1 ;	
 	var watchID;
+	var nav = null;
 
 	db.transaction(function (tx) {
 	  tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
