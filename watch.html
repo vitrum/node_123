@@ -19,17 +19,16 @@
 
 <body>
 
-<div id="container" class="baidumap"></div>
-
-	<div id="status" name="status">Status Message</div>
-	<div id="info" class="log"></div>
-	<div class="menu">
-		<button id="btnClen" class="btn btn_red btn_small" >Clearn</button>
-		<button id="btnSave" class="btn btn_small" >Save</button>
-		<button id="btnLoad" class="btn btn_small" >Load</button>
-		<button id="btnInit" class="btn" >Find my location</button>
+<div id="status" name="status">Status Message</div>
+  <div id="info" class="log"></div>
+  <div class="menu">
+    <button id="btnClen" class="btn btn_red btn_small" >Clearn</button>
+    <button id="btnLoad" class="btn btn_small" >Load</button>
+	<button id="btnWatch" class="btn btn_small" >Watch</button>
+	<button id="btnWatchStop" class="btn btn_small" >Stop Watch</button>
+    <button id="btnInit" class="btn btn_small" >Find my location</button>
   
-	</div> 
+  </div> 
 
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2&services=true"></script>
 <script type="text/javascript">
@@ -40,14 +39,14 @@
 
 /*geolocation  */
 	
-var touchTime = 1 ;	
-var watchID;
+	var touchTime = 1 ;	
+	var watchID;
 
-db.transaction(function (tx) {
-  tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
-  	touchTime = results.rows.item(0).id + 1;
- }, null);
-});
+	db.transaction(function (tx) {
+	  tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
+		touchTime = results.rows.item(0).id + 1;
+	 }, null);
+	});
 	
 	
 	var geolocationJson = new Object();
@@ -55,11 +54,14 @@ db.transaction(function (tx) {
 	var newgps_x , newgps_y;
 
 	jQuery(window).ready(function(){  
-		listenForPositionUpdates;
+		
 		jQuery("#btnInit").click(listenForPositionUpdates); 
 		jQuery("#btnClen").click(clearn_log); 
 		jQuery("#btnSave").click(save_log); 
 		jQuery("#btnLoad").click(load_log); 
+		jQuery("#btnWatch").click(listenForPositionUpdates);
+		jQuery("#btnWatchStop").click(watch_stop);
+		
 	});  
 
 	function initiate_geolocation() {  
@@ -89,34 +91,7 @@ db.transaction(function (tx) {
 		geolocationJson = position.coords;
 		touchTime = touchTime + 1 ;
 
-		/* baidu map */
-		var point = new BMap.Point(position.coords.longitude, position.coords.latitude);
 
-		bm.centerAndZoom(point, 19);
-		bm.addControl(new BMap.NavigationControl());
-		
-		BMap.Convertor.translate(new BMap.Point(position.coords.longitude,position.coords.latitude),0,translateOptions);
-
-		/*google map image
-				var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +  
-				position.coords.longitude + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
-				position.coords.latitude + ',' + position.coords.longitude;
-		
-		
-		var image_url2 = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + newgps_y + "," +  
-				newgps_x + "&zoom=17&size=320x200&markers=color:blue|label:S|" +  
-				newgps_y + ',' + newgps_x;
-				
-
-		jQuery("#map").remove(); 
-		jQuery("#map2").remove(); 
-		jQuery(document.body).append(  
-		  jQuery(document.createElement("img")).attr("src", image_url).attr('id','map') 
-		);  
-		jQuery(document.body).append(  
-		  jQuery(document.createElement("img")).attr("src", image_url2).attr('id','map2') 
-		); 
-		*/
 		db.transaction(function (tx) {
 		  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, latitude, longitude ,accuracy ,timestamp )');
 		  var tmpTxt = '"' + position.coords.latitude + '",' + 
