@@ -6,7 +6,7 @@ var ws = require('./lib/ws/server');
 var server = ws.createServer();  
 
 
-var TEST_DATABASE = 'nodejs_location';
+var TEST_DATABASE = 'node123';
 var TEST_TABLE = 'location';
 var client = mysql.createClient({
   user: 'root',
