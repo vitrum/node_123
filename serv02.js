@@ -27,7 +27,11 @@ client.query(
   'text TEXT, '+
   'created DATETIME, '+
   'PRIMARY KEY (id))'
-);
+, function(err) {
+  if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
+    throw err;
+  }
+});
   
 server.addListener('connection', function(conn){  
 console.log('New Connection:'+conn.id);  
