@@ -60,7 +60,7 @@
 		jQuery("#btnSave").click(save_log); 
 		jQuery("#btnLoad").click(load_log); 
 		jQuery("#btnWatch").click(listenForPositionUpdates);
-		jQuery("#btnWatchStop").click(watch_stop);
+		jQuery("#btnWatchStop").click(clearWatch);
 		
 	});  
 
@@ -135,7 +135,9 @@ function listenForPositionUpdates() {
       alert("Navigator not found");
   }
 }
-
+function clearWatch(watchID) {
+    window.navigator.geolocation.clearWatch(watchID);
+}
 
 	function clearn_log() {  
 		var text = "";
