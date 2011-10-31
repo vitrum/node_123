@@ -13,7 +13,7 @@ var client = mysql.createClient({
   password: '123456',
 });
 
-client.query('CREATE DATABASE '+TEST_DATABASE, function(err) {
+client.query('CREATE TEMPORARY DATABASE '+TEST_DATABASE, function(err) {
   if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
     throw err;
   }
