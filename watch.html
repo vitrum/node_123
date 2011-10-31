@@ -14,101 +14,26 @@
         src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
   <title>vitrum/node_123 @ GitHub</title>
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #222;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-      width:100%;
-      min-width:320px; max-width:480px;
-      font-size:12px;
-    }
-  
-    .btn { 
-      float:left;
-      background:-webkit-gradient(linear,left top,left bottom,from(#959595),to(#efefef));
-      background:-moz-linear-gradient(center bottom,#959595,#efefef);
-      border-radius: 10px 10px 10px 10px;
-      line-height: 15px;
-      height: 40px;
-      margin: 4px 0 0 4px;
-      padding: 6px;
-      text-align: center;
-      width: 90%;
-    }
-    .btn_red {
-      background:-webkit-gradient(linear,left top,left bottom,from(#ff9595),to(#ffefef));
-      background:-moz-linear-gradient(center bottom,#ff9595,#ffefef);
-    }
-    .btn_small {
-      width:100px;
-    }
-    .log {
-      width:90%;
-      height:200px;
-      overflow: auto;
-      font-size:10px;
-    }
-    .baidumap {
-      width:90%;
-      height:300px;
-    }
-    .title {
-      float:left;
-      clear:both;
-    }
-  </style>
+<link rel="stylesheet" media="all" href="css/style.css" />
 </head>
 
 <body>
-<div id="status" name="status">Status Message</div>
-  <div id="info" class="log"></div>
-  <div class="menu">
-    <button id="btnClen" class="btn btn_red btn_small" >Clearn</button>
-    <button id="btnSave" class="btn btn_small" >Save</button>
-    <button id="btnLoad" class="btn btn_small" >Load</button>
-    <button id="btnInit" class="btn" >Find my location</button>
-  
-  </div> 
-  <!--
-  <input value='GPS->baidu' type='button' onclick='alert("GPS->baidu");BMap.Convertor.translate(new BMap.Point(116.397428,39.90923),0,translateOptions);' />
-  -->
-  <h3 class="title">Baidu Map</h3>
-  <p class="title">百度 gps:<span id='baiduXY'> </span></p>
-  <div id="container" class="baidumap"></div>
-  <h3 class="title">GOOGLE Map</h3>
-  <div id="map_canvas"></div>
 
- 
+<div id="container" class="baidumap"></div>
+<div id="status" name="status">Status Message</div>
+
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2&services=true"></script>
 <script type="text/javascript">
 
 // HTML5 Web SQL Database
 	var db = openDatabase('node_123', '1.0', 'Test DB', 2 * 1024 * 1024);
 	var msg;
-/*
-db.transaction(function (tx) {
-  tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
-  msg = '<p>Log message created and row inserted.</p>';
-  document.querySelector('#info').innerHTML =  msg;
-});
 
-db.transaction(function (tx) {
-  tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
-   var len = results.rows.length, i;
-   msg = "<p>Found rows: " + len + "</p>";
-   document.querySelector('#info').innerHTML +=  msg;
-   for (i = 0; i < len; i++){
-     msg = "<p><b>" + results.rows.item(i).log + "</b></p>";
-     document.querySelector('#info').innerHTML +=  msg;
-   }
- }, null);
-});
-*/
-	/*geolocation  */
+/*geolocation  */
 	
 var touchTime = 1 ;	
+var watchID;
+
 db.transaction(function (tx) {
   tx.executeSql('SELECT * FROM LOGS ORDER BY id DESC', [], function (tx, results) {
   	touchTime = results.rows.item(0).id + 1;
@@ -121,14 +46,12 @@ db.transaction(function (tx) {
 	var newgps_x , newgps_y;
 
 	jQuery(window).ready(function(){  
-		jQuery("#btnInit").click(initiate_geolocation); 
-		jQuery("#btnClen").click(clearn_log); 
-		jQuery("#btnSave").click(save_log); 
-		jQuery("#btnLoad").click(load_log); 
+		listenForPositionUpdates();
 	});  
 
 	function initiate_geolocation() {  
 		navigator.geolocation.getCurrentPosition(handle_geolocation_query,errorCallback);  
+		//navigator.geolocation.watchPosition(handle_geolocation_query,errorCallback);  
 	}  
 	
 	function errorCallback(error) {
@@ -206,6 +129,25 @@ db.transaction(function (tx) {
 		newgps_y = point.lat;
 		//alert(point.lng + ',' + point.lat);
 	}
+
+function listenForPositionUpdates() {
+  if (nav == null) {
+      nav = window.navigator;
+  }
+  if (nav != null) {
+      var geoloc = nav.geolocation;
+      if (geoloc != null) {
+          watchID = geoloc.watchPosition(handle_geolocation_query,errorCallback);
+      }
+      else {
+          alert("geolocation not supported");
+      }
+  }
+  else {
+      alert("Navigator not found");
+  }
+}
+
 
 	function clearn_log() {  
 		var text = "";
