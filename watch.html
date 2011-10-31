@@ -100,7 +100,7 @@
 						'"' + position.coords.accuracy + '",'+ 
 						'"' + tempTime + '"' ;
 		  var upTxt = 'INSERT INTO LOGS (id , latitude, longitude ,accuracy ,timestamp) VALUES (' + touchTime + ', ' + tmpTxt + ')';
-		  alert(upTxt);
+		  //alert(upTxt);
 		  tx.executeSql(upTxt);
 		  msg = '<p>Log message created and row inserted. ' + upTxt + '</p>';
 		  document.querySelector('#status').innerHTML =  msg;
