@@ -22,6 +22,7 @@
 		jQuery("#btnClen").click(clearn_log); 
 		jQuery("#btnSave").click(save_log); 
 		jQuery("#btnLoad").click(load_log); 
+		jQuery("#btnSync").click(Sync_log); 
 		
 		//load database
 		if (openDatabase) {
@@ -205,6 +206,22 @@ function initiate_geolocation() {
 		
 
 	}  
+	function sync_log() {  
+		db.transaction(function (tx) {
+		  tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+		   var len = results.rows.length, i;
+		   for (i = 0; i < len; i++){
+				var jsonTxt = "['latitude':'"+ results.rows.item(i).latitude +"','longitude':'"+ results.rows.item(i).longitude +"']";  
+				var jsonTxtObj = jsonTxt;
+				ws_send(jsonTxtObj); 
+			 
+			 //msg = "<p><b>touchNo. :" + results.rows.item(i).id + "</b>, Time :" + results.rows.item(i).timestamp + "</p>";
+			 //document.querySelector('#status').innerHTML +=  msg;
+		   }
+		 }, null);
+		});		
+
+	} 
 	function load_log() {  
 		var text = "";
 		jQuery("#info").html(text);
