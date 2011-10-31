@@ -55,7 +55,11 @@ db.transaction(function (tx) {
 	var newgps_x , newgps_y;
 
 	jQuery(window).ready(function(){  
-		listenForPositionUpdates();
+		listenForPositionUpdates;
+		jQuery("#btnInit").click(listenForPositionUpdates); 
+		jQuery("#btnClen").click(clearn_log); 
+		jQuery("#btnSave").click(save_log); 
+		jQuery("#btnLoad").click(load_log); 
 	});  
 
 	function initiate_geolocation() {  
