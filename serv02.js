@@ -13,13 +13,14 @@ var client = mysql.createClient({
   password: '123456',
 });
 
-client.query('CREATE TEMPORARY DATABASE '+TEST_DATABASE, function(err) {
+client.query('CREATE DATABASE '+TEST_DATABASE, function(err) {
   if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
     throw err;
   }
 });
 client.query('USE '+TEST_DATABASE);
 
+/*
 client.query(
   'CREATE TABLE '+TEST_TABLE+
   '(id INT(11) AUTO_INCREMENT, '+
@@ -32,7 +33,7 @@ client.query(
     throw err;
   }
 });
-  
+  */
 server.addListener('connection', function(conn){  
 console.log('New Connection:'+conn.id);  
 conns.push(conn);  
