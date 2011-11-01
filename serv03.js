@@ -45,7 +45,7 @@ conn.addListener('message',function(msg){
 		client.query(
 		  'INSERT INTO '+TEST_TABLE+' '+
 		  'SET title = ?, text = ?, created = ?',
-		  [conn.id, msg, '2010-08-16 10:00:23']
+		  [conn.id, msg, 'CURRENT_DATE()']
 		);
 
         var megContent = conn.id  
