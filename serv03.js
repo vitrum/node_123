@@ -43,8 +43,8 @@ conn.addListener('message',function(msg){
         console.log(conn.id+':'+msg);  
 		var newTime = new Date(),
 			insertTime = newTime.getFullYear() + '-' 
-					+ newTime.getMonth() + '-'
-					+ newTime.getDate() + ' '
+					+ (Number(newTime.getMonth())+ 1) + '-'
+					+ newTime.getDate()  + ' '
 					+ newTime.getHours() + ':'
 					+ newTime.getMinutes() + ':'
 					+ newTime.getSeconds() ;
