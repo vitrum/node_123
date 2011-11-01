@@ -41,11 +41,13 @@ conn.send(conn.id+" is your Connection ID: ");
 conn.addListener('message',function(msg){  
 /* output the new message sent from client*/  
         console.log(conn.id+':'+msg);  
-		
+		var newTime = new Date(),
+			insertTime = newTime.toLocaleString();
+
 		client.query(
 		  'INSERT INTO '+TEST_TABLE+' '+
 		  'SET title = ?, text = ?, created = ?',
-		  [conn.id, msg, NOW()]
+		  [conn.id, msg, insertTime]
 		);
 
         var megContent = conn.id  
