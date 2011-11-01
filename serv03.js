@@ -42,7 +42,12 @@ conn.addListener('message',function(msg){
 /* output the new message sent from client*/  
         console.log(conn.id+':'+msg);  
 		var newTime = new Date(),
-			insertTime = newTime.toLocaleString();
+			insertTime = newTime.getFullYear() + '-' 
+					+ newTime.getMonth() + '-'
+					+ newTime.getDate() + ' '
+					+ newTime.getHours() + ':'
+					+ newTime.getMinutes() + ':'
+					+ newTime.getSeconds() ;
 
 		client.query(
 		  'INSERT INTO '+TEST_TABLE+' '+
