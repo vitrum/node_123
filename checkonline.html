@@ -12,13 +12,15 @@
        log.appendChild(document.createTextNode("Event: " + msg + "; status=" + condition + "\n"));  
      }  
      function loaded() {  
-       updateOnlineStatus("load");  
-       document.body.addEventListener("offline", function () {  
-         updateOnlineStatus("offline")  
-       }, false);  
-       document.body.addEventListener("online", function () {  
-         updateOnlineStatus("online")  
-       }, false);  
+		setInterval(function () {
+		   updateOnlineStatus("load");  
+		   document.body.addEventListener("offline", function () {  
+			 updateOnlineStatus("offline")  
+		   }, false);  
+		   document.body.addEventListener("online", function () {  
+			 updateOnlineStatus("online")  
+		   }, false);  
+		}, 1000);
      }  
    </script>  
    <style>...</style>  
