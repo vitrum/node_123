@@ -1,6 +1,12 @@
 <!doctype html>  
  <html>  
- <head>  
+	
+ <head>
+ 	<meta charset='utf-8'>
+	<meta name="viewport" content="user-scalable=no, width=device-width"  />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link rel="stylesheet" media="all" href="css/style.css" />
    <script>  
      function updateOnlineStatus(msg) {  
        var status = document.getElementById("status");  
@@ -9,7 +15,7 @@
        var state = document.getElementById("state");  
        state.innerHTML = condition;  
        var log = document.getElementById("log");  
-       log.appendChild(document.createTextNode("Event: " + msg + "; status=" + condition + "\n"));  
+       log.innerHTML(document.createTextNode("Event: " + msg + "; status=" + condition + "\n"));  
      }  
      function loaded() {  
 		setInterval(function () {
