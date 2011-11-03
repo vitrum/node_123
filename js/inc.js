@@ -111,8 +111,17 @@ function connect(host) {
 };  
 // function to display stuff, the second parameter is the class of the <p> (used for styling)  
 function debug(msg, type) {  
-	$("#console").append('<p class="' + (type || '') + '">' + msg + '</p>');  
+	$("#console").append('<p class="' + (type || '') + '">' + msg + '</p>'); 
+	
 };  
+
+//
+function debugMapMsg(msg, type) {  
+	$("#console").append('<p class="' + (type || '') + '">' + msg + '</p>');  
+}; 
+
+
+
 
 function getNewLocationInfo(msg, type) {  
 	$("#console").append('<p class="' + (type || '') + '">' + msg + '</p>');  
